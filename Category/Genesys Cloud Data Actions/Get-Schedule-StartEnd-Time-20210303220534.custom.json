@@ -1,0 +1,49 @@
+{
+  "name": "Get Schedule Start/End Time - Exported 2021-03-03 @ 22:05",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/architect/schedules?name=$esc.url(${input.scheduleName})",
+      "requestType": "GET",
+      "headers": {},
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "Start": "$.entities[0].start",
+        "End": "$.entities[0].end"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\"start\": ${Start},\"end\": ${End}}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "scheduleName": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

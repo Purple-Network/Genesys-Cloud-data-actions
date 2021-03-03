@@ -1,0 +1,64 @@
+{
+  "name": "Get User External ID - Exported 2021-03-03 @ 22:05",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/scim/v2/users/${input.USER_ID}",
+      "requestType": "GET",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "status": "$..externalIds[0].value"
+      },
+      "translationMapDefaults": {
+        "status": "[]"
+      },
+      "successTemplate": "{\"externalId\": ${successTemplateUtils.firstFromArray(${status},\"$esc.quote$esc.quote\")}}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "UserIdRequest",
+        "description": "A user ID-based request.",
+        "type": "object",
+        "required": [
+          "USER_ID"
+        ],
+        "properties": {
+          "USER_ID": {
+            "description": "The user ID.",
+            "type": "string",
+            "minLength": 36,
+            "maxLength": 36,
+            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get User externalId",
+        "description": "Returns a user’s routing status.",
+        "type": "object",
+        "properties": {
+          "externalId": {
+            "description": "The user’s external id, RACV's sAMAccountName",
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

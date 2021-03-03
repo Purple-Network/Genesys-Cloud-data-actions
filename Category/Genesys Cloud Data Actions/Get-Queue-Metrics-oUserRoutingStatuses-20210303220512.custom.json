@@ -1,0 +1,77 @@
+{
+  "name": "Get Queue Metrics oUserRoutingStatuses - Exported 2021-03-03 @ 22:05",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/analytics/queues/observations/query",
+      "requestType": "POST",
+      "headers": {},
+      "requestTemplate": "{\n \"filter\": {\n  \"type\": \"or\",\n  \"clauses\": [\n   {\n    \"type\": \"and\",\n    \"predicates\": [\n     {\n      \"type\": \"dimension\",\n      \"dimension\": \"queueId\",\n      \"operator\": \"matches\",\n      \"value\": \"${input.queueId}\"\n     }\n    ]\n   }\n  ]\n },\n \"metrics\": [\n  \"oUserRoutingStatuses\"\n ]\n}"
+    },
+    "response": {
+      "translationMap": {
+        "offQueue": "$..data[?(@.metric=='oUserRoutingStatuses' && @.qualifier=='OFF_QUEUE')].stats",
+        "default": "$.NULL",
+        "idle": "$..data[?(@.metric=='oUserRoutingStatuses' && @.qualifier=='IDLE')].stats",
+        "interacting": "$..data[?(@.metric=='oUserRoutingStatuses' && @.qualifier=='INTERACTING')].stats"
+      },
+      "translationMapDefaults": {
+        "offQueue": "[]",
+        "default": "{\"count\": 0}",
+        "idle": "[]",
+        "interacting": "[]"
+      },
+      "successTemplate": "{\"IDLE\": ${successTemplateUtils.firstFromArray(${idle}, ${default})}, \"OFF_QUEUE\":${successTemplateUtils.firstFromArray(${offQueue}, ${default})},\"INTERACTING\":${successTemplateUtils.firstFromArray(${interacting}, ${default})}}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "queueId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {
+          "IDLE": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer"
+              }
+            },
+            "additionalProperties": true
+          },
+          "INTERACTING": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer"
+              }
+            },
+            "additionalProperties": true
+          },
+          "OFF_QUEUE": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

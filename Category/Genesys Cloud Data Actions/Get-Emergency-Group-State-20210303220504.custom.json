@@ -1,0 +1,58 @@
+{
+  "name": "Get Emergency Group State - Exported 2021-03-03 @ 22:05",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/architect/emergencygroups/${input.GroupID}",
+      "requestType": "GET",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "IsEnabled": "$.enabled"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\n   \"IsEnabled\": ${IsEnabled}\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "GroupIdRequest",
+        "description": "Get Emergency Group State.",
+        "type": "object",
+        "required": [
+          "GroupID"
+        ],
+        "properties": {
+          "GroupID": {
+            "description": "Specify the Emergency GroupID, not the Group Name",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get Emergency Group State",
+        "description": "Returns the status of an Emergency Group.",
+        "type": "object",
+        "properties": {
+          "IsEnabled": {
+            "description": "Status of Emergency Group.",
+            "type": "boolean",
+            "title": "Emergency Group State"
+          }
+        }
+      }
+    }
+  },
+  "secure": false
+}

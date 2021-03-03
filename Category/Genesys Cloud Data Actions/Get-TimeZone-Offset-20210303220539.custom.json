@@ -1,0 +1,45 @@
+{
+  "name": "Get TimeZone Offset - Exported 2021-03-03 @ 22:05",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/timezones?pageSize=100&pageNumber=4",
+      "requestType": "GET",
+      "headers": {},
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "offset": "$.entities[?(@.id=='Australia/Melbourne')].offset"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\"offset\": ${successTemplateUtils.firstFromArray(\"${offset}\")}}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "undefined": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

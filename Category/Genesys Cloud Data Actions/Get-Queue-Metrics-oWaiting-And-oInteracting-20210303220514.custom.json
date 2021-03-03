@@ -1,0 +1,81 @@
+{
+  "name": "Get Queue Metrics oWaiting And oInteracting - Exported 2021-03-03 @ 22:05",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/analytics/queues/observations/query",
+      "requestType": "POST",
+      "headers": {},
+      "requestTemplate": "{\n \"filter\": {\n  \"type\": \"or\",\n  \"clauses\": [\n   {\n    \"type\": \"and\",\n    \"predicates\": [\n     {\n      \"type\": \"dimension\",\n      \"dimension\": \"queueId\",\n      \"operator\": \"matches\",\n      \"value\": \"${input.queueId}\"\n     },\n     {\n      \"type\": \"dimension\",\n      \"dimension\": \"mediaType\",\n      \"operator\": \"matches\",\n      \"value\": \"voice\"\n     }\n    ]\n   }\n  ]\n },\n \"metrics\": [\n  \"oWaiting\"\n ]\n}"
+    },
+    "response": {
+      "translationMap": {
+        "default": "$.NULL",
+        "waiting": "$..data[?(@.metric=='oWaiting')].stats",
+        "interacting": "$..data[?(@.metric=='oInteracting')].stats"
+      },
+      "translationMapDefaults": {
+        "default": "{\"count\": 0}",
+        "waiting": "[]",
+        "interacting": "[]"
+      },
+      "successTemplate": "{\"oWaiting\": ${successTemplateUtils.firstFromArray(${waiting}, ${default})},\"oInteracting\":${successTemplateUtils.firstFromArray(${interacting}, ${default})}}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "queueId",
+          "mediaType"
+        ],
+        "properties": {
+          "queueId": {
+            "type": "string"
+          },
+          "mediaType": {
+            "default": "voice",
+            "type": "string",
+            "enum": [
+              "message",
+              "chat",
+              "email",
+              "voice",
+              "callback"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {
+          "oWaiting": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer"
+              }
+            },
+            "additionalProperties": true
+          },
+          "oInteracting": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

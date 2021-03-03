@@ -1,0 +1,58 @@
+{
+  "name": "Get Logged In Agents per Queue - Exported 2021-03-03 @ 22:05",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/routing/queues/${input.QUEUE_ID}/users?presence=AVAILABLE,BUSY,MEETING,AWAY,TRAINING,MEAL,BREAK,ON%20QUEUE",
+      "requestType": "GET",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "agents": "$.total"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\n   \"agents\": ${agents}\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "QueueIdRequest",
+        "description": "A Queue ID-based request.",
+        "type": "object",
+        "required": [
+          "QUEUE_ID"
+        ],
+        "properties": {
+          "QUEUE_ID": {
+            "description": "The queue ID.",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get Members of queue",
+        "description": "Returns how many agents are logged in.",
+        "type": "object",
+        "properties": {
+          "agents": {
+            "description": "Number of agents logged in.",
+            "type": "integer",
+            "title": "Agents"
+          }
+        }
+      }
+    }
+  },
+  "secure": false
+}

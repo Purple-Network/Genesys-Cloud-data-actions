@@ -1,0 +1,47 @@
+{
+  "name": "Get Emergency Group State - by name - Exported 2021-03-03 @ 22:05",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/architect/emergencygroups?name=$esc.url(${input.emergencyGroupName})",
+      "requestType": "GET",
+      "headers": {},
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "IsEnabled": "$.entities[0].enabled"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\n   \"IsEnabled\": ${IsEnabled}\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "title": "Get group by name",
+        "type": "object",
+        "properties": {
+          "emergencyGroupName": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "title": "Emergency Group State",
+        "type": "object",
+        "properties": {
+          "IsEnabled": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}
