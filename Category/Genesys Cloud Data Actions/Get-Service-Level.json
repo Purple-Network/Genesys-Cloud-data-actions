@@ -1,0 +1,80 @@
+{
+  "name": "Get Service Level",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/analytics/conversations/aggregates/query",
+      "requestType": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "{\"groupBy\":[\"queueId\"], \"interval\":\"${input.INTERVAL}\", \"filter\": {\"type\":\"and\",\"predicates\": [{\"dimension\": \"queueId\",\"value\": \"${input.QUEUE_ID}\"}, {\"dimension\": \"mediaType\",\"value\": \"voice\"}]}, \"metrics\": [\"oServiceLevel\"]}"
+    },
+    "response": {
+      "translationMap": {},
+      "successTemplate": "${rawResult}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get Service Level",
+        "description": "Service level for a specific queue.",
+        "type": "object",
+        "required": [
+          "QUEUE_ID",
+          "INTERVAL"
+        ],
+        "properties": {
+          "INTERVAL": {
+            "description": "Interval",
+            "type": "string"
+          },
+          "QUEUE_ID": {
+            "description": "The queue ID.",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "results.data.metrics.stats.numerator": {
+            "additionalItems": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "results.data.metrics.stats.ratio": {
+            "additionalItems": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "results.data.metrics.stats.target": {
+            "additionalItems": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "results.data.metrics.stats.denominator": {
+            "additionalItems": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "secure": false
+}

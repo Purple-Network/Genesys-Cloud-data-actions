@@ -1,0 +1,58 @@
+{
+  "name": "Get User Routing Status",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "static",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/users/${input.USER_ID}/routingstatus",
+      "requestType": "GET",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "status": "$.status"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\n   \"status\": ${status}\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "UserIdRequest",
+        "description": "A user ID-based request.",
+        "type": "object",
+        "required": [
+          "USER_ID"
+        ],
+        "properties": {
+          "USER_ID": {
+            "type": "string",
+            "description": "The user ID."
+          }
+        }
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get User Routing Status Response",
+        "description": "Returns a user’s routing status.",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "The user’s routing status, which indicates whether the user is able to receive ACD interactions."
+          }
+        }
+      }
+    }
+  },
+  "secure": false
+}

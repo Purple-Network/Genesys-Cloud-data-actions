@@ -1,0 +1,50 @@
+{
+  "name": "Get NSW/VIC/ACT/TAS Time Offset",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/timezones?pageSize=500&pageNumber=1",
+      "requestType": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "TimezoneId": "$.entities[?(@.id == 'Australia/Sydney')].offset"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\"TimezoneId\": ${successTemplateUtils.firstFromArray(${TimezoneId})}}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "contactId": {
+            "description": "",
+            "type": "string",
+            "title": "Id"
+          },
+          "TimezoneId": {
+            "description": "",
+            "type": "integer",
+            "title": "Timezone Offset"
+          }
+        }
+      }
+    }
+  },
+  "secure": false
+}

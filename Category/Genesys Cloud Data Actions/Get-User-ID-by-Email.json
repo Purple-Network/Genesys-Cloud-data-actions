@@ -1,0 +1,58 @@
+{
+  "name": "Get User ID by Email",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/users/search",
+      "requestType": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "{\r\n  \"query\": [\r\n     {\r\n        \"value\": \"${input.email}\",\r\n        \"fields\": [\"workemail\",\"email\"],\r\n        \"type\": \"EXACT\"\r\n     }\r\n  ]\r\n}\r\n}"
+    },
+    "response": {
+      "translationMap": {
+        "results_id": "$.results[0].id"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\"results.id\":${results_id}}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "UserIdRequest",
+        "description": "GET user ID via email",
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "description": "The email address from a user.",
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get a userID based on an email address given",
+        "description": "Returns a userID.",
+        "type": "object",
+        "properties": {
+          "results.id": {
+            "description": "The User ID of an agent",
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

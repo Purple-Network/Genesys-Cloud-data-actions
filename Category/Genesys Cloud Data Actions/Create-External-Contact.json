@@ -1,0 +1,74 @@
+{
+  "name": "Create External Contact",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/externalcontacts/contacts",
+      "requestType": "POST",
+      "headers": {},
+      "requestTemplate": "{\n\"firstName\": \"$!{input.firstName}\",\n\"middleName\": \"$!{input.middleName}\",\n\"lastName\": \"$!{input.lastName}\",\n\"workPhone\": {\n\"display\": \"$!{input.workPhone}\"\n},\n\"cellPhone\": {\n\"display\": \"$!{input.cellPhone}\"\n},\n\"homePhone\": {\n\"display\": \"$!{input.homePhone}\"\n},\n\"otherPhone\": {\n\"display\": \"$!{input.otherPhone}\"\n},\n\"workEmail\": \"$!{input.workEmail}\",\n\"personalEmail\": \"$!{input.personalEmail}\",\n\"otherEmail\": \"$!{input.otherEmail}\"\n}"
+    },
+    "response": {
+      "translationMap": {
+        "externalContactId": "$.id"
+      },
+      "translationMapDefaults": {
+        "externalContactId": "\"\""
+      },
+      "successTemplate": "{ \"externalContactId\": ${externalContactId} }"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "middleName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "workPhone": {
+            "type": "string"
+          },
+          "cellPhone": {
+            "type": "string"
+          },
+          "homePhone": {
+            "type": "string"
+          },
+          "otherPhone": {
+            "type": "string"
+          },
+          "workEmail": {
+            "type": "string"
+          },
+          "personalEmail": {
+            "type": "string"
+          },
+          "otherEmail": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {
+          "externalContactId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

@@ -1,0 +1,58 @@
+{
+  "name": "Get Conversation Start Time",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/conversations/${input.ConversationID}",
+      "requestType": "GET",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "startTime": "$.startTime"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\n   \"StartDateTime\": ${startTime}\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "description": "A request for the customer call start datetime",
+        "type": "object",
+        "required": [
+          "ConversationID"
+        ],
+        "properties": {
+          "ConversationID": {
+            "description": "Conversation/interaction ID",
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get Members of queue",
+        "description": "Returns datetime in UTC.",
+        "type": "object",
+        "properties": {
+          "StartDateTime": {
+            "description": "Call start DateTimeUTC",
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

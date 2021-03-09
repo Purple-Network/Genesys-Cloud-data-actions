@@ -1,0 +1,62 @@
+{
+  "name": "Get Generic Attribute",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/flows/datatables/${input.DataTableId}/rows/${input.AttributeName}?showbrief=false",
+      "requestType": "GET",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "{\"AttributeValue\": \"${input.AttributeValue}\", \"key\": \"${input.AttributeName}\"}"
+    },
+    "response": {
+      "translationMap": {
+        "AttributeValue": "$.AttributeValue"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\"AttributeValue\": ${AttributeValue}\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Query an attribute in the generic attribute table.",
+        "description": "Gets a Single Row in a Data Table",
+        "type": "object",
+        "required": [
+          "DataTableId"
+        ],
+        "properties": {
+          "AttributeName": {
+            "description": "The attribute name to find in the table",
+            "type": "string"
+          },
+          "DataTableId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get Generic Attribute Response",
+        "description": "Returns an attributes value",
+        "type": "object",
+        "properties": {
+          "AttributeValue": {
+            "description": "The value of the generic attribute.",
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

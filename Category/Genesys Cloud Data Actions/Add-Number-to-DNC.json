@@ -1,0 +1,46 @@
+{
+  "name": "Add Number to DNC",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/outbound/dnclists/${input.dncListId}/phonenumbers",
+      "requestType": "POST",
+      "headers": {},
+      "requestTemplate": "[ \"${input.phoneNumber}\" ]"
+    },
+    "response": {
+      "translationMap": {},
+      "translationMapDefaults": {},
+      "successTemplate": "${rawResult}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "dncListId",
+          "phoneNumber"
+        ],
+        "properties": {
+          "dncListId": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

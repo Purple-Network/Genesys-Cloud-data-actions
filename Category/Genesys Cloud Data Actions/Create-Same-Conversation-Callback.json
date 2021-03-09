@@ -1,0 +1,51 @@
+{
+  "name": "Create Same Conversation Callback",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/conversations/${input.conversationId}/participants/${input.participantId}/callbacks",
+      "requestType": "POST",
+      "headers": {},
+      "requestTemplate": "{\n\"scriptId\": \"${input.scriptId}\",\n\"callbackNumbers\": [ \"${input.phone}\" ],\n\"routingData\": {\n\"queueId\": \"${input.queueId}\"\n}\n}"
+    },
+    "response": {
+      "translationMap": {},
+      "translationMapDefaults": {},
+      "successTemplate": "${rawResult}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "conversationId": {
+            "type": "string"
+          },
+          "participantId": {
+            "type": "string"
+          },
+          "scriptId": {
+            "type": "string"
+          },
+          "queueId": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

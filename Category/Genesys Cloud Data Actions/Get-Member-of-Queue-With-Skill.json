@@ -1,0 +1,63 @@
+{
+  "name": "Get Member of Queue With Skill",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/routing/queues/${input.QUEUE_ID}/users?skills=${input.SKILL}&joined=true",
+      "requestType": "GET",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "UserID": "$.entities[2].id"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\n   \"UserID\": ${UserID}\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Check QueueID routingStatus",
+        "description": "Check QueueID with Skill for provided routingStatus",
+        "type": "object",
+        "required": [
+          "QUEUE_ID",
+          "SKILL"
+        ],
+        "properties": {
+          "QUEUE_ID": {
+            "description": "QueueID",
+            "type": "string"
+          },
+          "SKILL": {
+            "description": "Skill",
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Response",
+        "description": "Response",
+        "type": "object",
+        "properties": {
+          "UserID": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

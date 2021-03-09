@@ -1,0 +1,73 @@
+{
+  "name": "Get Estimated Wait Time (With Default)",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/routing/queues/${input.QUEUE_ID}/mediatypes/${input.MEDIA_TYPE}/estimatedwaittime",
+      "requestType": "GET",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "estimated_wait_time": "$.results[0].estimatedWaitTimeSeconds"
+      },
+      "translationMapDefaults": {
+        "estimated_wait_time": "0"
+      },
+      "successTemplate": "{\n   \"estimated_wait_time\": ${estimated_wait_time}\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Estimated Wait Time Request",
+        "description": "The estimated wait time for a specific media type and queue.",
+        "type": "object",
+        "required": [
+          "QUEUE_ID",
+          "MEDIA_TYPE"
+        ],
+        "properties": {
+          "QUEUE_ID": {
+            "type": "string",
+            "description": "The queue ID."
+          },
+          "MEDIA_TYPE": {
+            "type": "string",
+            "description": "The media type of the interaction: call, chat, callback, email, social media, or video communication.",
+            "enum": [
+              "call",
+              "chat",
+              "callback",
+              "email",
+              "socialExpression",
+              "videoComm"
+            ]
+          }
+        }
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get Estimated Wait Time Response",
+        "description": "Returns the estimated wait time.",
+        "type": "object",
+        "properties": {
+          "estimated_wait_time": {
+            "type": "integer",
+            "title": "Estimated Wait Time in Seconds",
+            "description": "The estimated wait time (in seconds) for the specified media type and queue. "
+          }
+        }
+      }
+    }
+  },
+  "secure": false
+}

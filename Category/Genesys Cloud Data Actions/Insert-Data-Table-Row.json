@@ -1,0 +1,62 @@
+{
+  "name": "Insert Data Table Row",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/flows/datatables/6bca5ef8-411c-489d-a5d1-736bcd154111/rows",
+      "requestType": "POST",
+      "headers": {},
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {},
+      "translationMapDefaults": {},
+      "successTemplate": "${rawResult}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Row update",
+        "description": "A Row update",
+        "type": "object",
+        "required": [
+          "Key"
+        ],
+        "properties": {
+          "Key": {
+            "description": "Tarjeta",
+            "type": "string"
+          },
+          "ANI": {
+            "description": "Telefono origen",
+            "type": "number"
+          }
+        }
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Row update",
+        "description": "returns the new row",
+        "type": "object",
+        "properties": {
+          "Key": {
+            "description": "Tarjeta",
+            "type": "string",
+            "title": "Tarjeta"
+          },
+          "ANI": {
+            "description": "Telefono origen",
+            "type": "number",
+            "title": "ANI"
+          }
+        }
+      }
+    }
+  },
+  "secure": false
+}

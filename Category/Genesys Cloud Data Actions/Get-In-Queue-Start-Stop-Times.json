@@ -1,0 +1,49 @@
+{
+  "name": "Get In-Queue Start Stop Times",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/conversations/${input.conversationID}",
+      "requestType": "GET",
+      "headers": {},
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "theEndArray": "$.participants[?(@.purpose==\"agent\")].startTime",
+        "theStartArray": "$.participants[?(@.participantType==\"ACD\")].startTime"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\"startTime\": ${successTemplateUtils.firstFromArray(\"${theStartArray}\", \"0\")}, \"endTime\": ${successTemplateUtils.firstFromArray(\"${theEndArray}\", \"0\")}}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "conversationID": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {
+          "startTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

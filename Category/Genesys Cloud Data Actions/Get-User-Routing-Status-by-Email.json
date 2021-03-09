@@ -1,0 +1,56 @@
+{
+  "name": "Get User Routing Status by Email",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/users/search",
+      "requestType": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "{\n   \"expand\": [\"routingStatus\"],\n   \"query\": [\n      {\n         \"fields\": [\"email\"],\n         \"value\": \"${input.EmailAddress}\",\n         \"operator\": \"AND\",\n         \"type\": \"EXACT\"\n      }\n   ]\n}"
+    },
+    "response": {
+      "translationMap": {
+        "list": "$.results[0].routingStatus.status"
+      },
+      "translationMapDefaults": {
+        "list": "null"
+      },
+      "successTemplate": "{\r\n   \"routingStatus\": ${list}\r\n  }"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "required": [
+          "EmailAddress"
+        ],
+        "properties": {
+          "EmailAddress": {
+            "description": "Email Address",
+            "type": "string",
+            "title": "Email Address"
+          }
+        }
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "routingStatus": {
+            "description": "Your agent's routing status",
+            "type": "string",
+            "title": "routingStatus"
+          }
+        }
+      }
+    }
+  },
+  "secure": false
+}

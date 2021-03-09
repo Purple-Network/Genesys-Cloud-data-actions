@@ -1,0 +1,57 @@
+{
+  "name": "Add Contact to Contact List",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/outbound/contactlists/${input.contactListId}/contacts?priority=${input.Priority}&doNotQueue=false",
+      "requestType": "POST",
+      "headers": {},
+      "requestTemplate": "[{\n    \"data\": {\n      \"Phone\": \"${input.PhoneNumber}\",\n      \"ContactColumn1\": \"${input.ContactColumn1}\"\n    }\n}]"
+    },
+    "response": {
+      "translationMap": {
+        "callback": "$.[0]"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "${callback}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "contactListId"
+        ],
+        "properties": {
+          "contactListId": {
+            "type": "string"
+          },
+          "Priority": {
+            "type": "boolean"
+          },
+          "PhoneNumber": {
+            "type": "string"
+          },
+          "ContactColumn1": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

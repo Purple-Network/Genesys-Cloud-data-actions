@@ -1,0 +1,52 @@
+{
+  "name": "Get Contact From Contact List",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/outbound/contactlists/${input.contactlistId}/contacts/${input.contactId}",
+      "requestType": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": ""
+    },
+    "response": {
+      "translationMap": {},
+      "translationMapDefaults": {},
+      "successTemplate": "${rawResult}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "contactListId": {
+            "type": "string"
+          },
+          "contactId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get Info from Contact List",
+        "description": "Returns Contact List Entry",
+        "type": "object",
+        "properties": {
+          "data.CustomerName": {
+            "type": "string",
+            "title": "Customer Name",
+            "description": "Example contact column"
+          }
+        }
+      }
+    }
+  },
+  "secure": false
+}

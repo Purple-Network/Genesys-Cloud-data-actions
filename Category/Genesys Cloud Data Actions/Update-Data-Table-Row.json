@@ -1,0 +1,57 @@
+{
+  "name": "Update Data Table Row",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/flows/datatables/${input.datatableId}/rows/${input.Key.replace(' ','%20')}",
+      "requestType": "PUT",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "{\"Field name 1\": ${input.FieldName1},\"Key\":\"${input.Key}\"}\""
+    },
+    "response": {
+      "translationMap": {},
+      "translationMapDefaults": {},
+      "successTemplate": "${rawResult}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Update Table",
+        "description": "using this to update the table",
+        "type": "object",
+        "required": [
+          "datatableId",
+          "Key"
+        ],
+        "properties": {
+          "datatableId": {
+            "description": "dataTableId",
+            "type": "string"
+          },
+          "FieldName1": {
+            "type": "string"
+          },
+          "Key": {
+            "description": "Which key to update",
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

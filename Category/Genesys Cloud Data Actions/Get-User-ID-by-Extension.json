@@ -1,0 +1,48 @@
+{
+  "name": "Get User ID by Extension",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/search?profile=false",
+      "requestType": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "{\r\n  \"pageSize\": 1,\r\n  \"pageNumber\": 1,\r\n  \"types\": [\r\n    \"users\"\r\n  ],\r\n  \"sortOrder\": \"SCORE\",\r\n  \"query\": [\r\n    {\r\n      \"type\": \"EXACT\",\r\n      \"fields\": [\r\n        \"addresses\"\r\n      ],\r\n      \"operator\": \"AND\",\r\n      \"value\": \"${input.userExtension}\"\r\n    }\r\n  ]\r\n}"
+    },
+    "response": {
+      "translationMap": {
+        "id": "$.results[0].id"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\"id\": ${id}}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "userExtension": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "title": "results",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

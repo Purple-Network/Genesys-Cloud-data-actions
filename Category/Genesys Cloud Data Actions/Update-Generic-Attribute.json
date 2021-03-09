@@ -1,0 +1,52 @@
+{
+  "name": "Update Generic Attribute",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/flows/datatables/${input.DataTableId}/rows/${input.AttributeName}",
+      "requestType": "PUT",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "{\"AttributeValue\": \"${input.AttributeValue}\", \"key\": \"${input.AttributeName}\"}"
+    },
+    "response": {
+      "translationMap": {},
+      "translationMapDefaults": {},
+      "successTemplate": "${rawResult}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Update a single attribute in the generic attribute table.",
+        "description": "Updates a Single Row in a Data Table",
+        "type": "object",
+        "properties": {
+          "AttributeName": {
+            "description": "The attribute name to update in the table",
+            "type": "string"
+          },
+          "AttributeValue": {
+            "description": "The attribute value to write in the table",
+            "type": "string"
+          },
+          "DataTableId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

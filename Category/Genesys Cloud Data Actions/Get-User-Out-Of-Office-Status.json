@@ -1,0 +1,58 @@
+{
+  "name": "Get User Out Of Office Status",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/users/${input.USER_ID}/outofoffice",
+      "requestType": "GET",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "active": "$.active"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\"active\": ${active}\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "UserIdRequest",
+        "description": "A user ID-based request.",
+        "type": "object",
+        "required": [
+          "USER_ID"
+        ],
+        "properties": {
+          "USER_ID": {
+            "type": "string",
+            "description": "The user ID."
+          }
+        }
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get User Routing Status Response",
+        "description": "Returns a user’s out of office status.",
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean",
+            "title": "active",
+            "description": "The user’s out of office status as a true/false flag."
+          }
+        }
+      }
+    }
+  },
+  "secure": false
+}

@@ -1,0 +1,78 @@
+{
+  "name": "Update Contact List",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/outbound/contactlists/${input.ContactListID}/contacts/${input.contactId}",
+      "requestType": "PUT",
+      "headers": {},
+      "requestTemplate": "{\n   \"contactListId\":\"${input.ContactListID}\", \"contactId\":\"${input.contactId}\", \"data\" :{\"Phone\":\"${input.Phone}\", \"Wrap\":\"${input.Wrap}\", \"Notes\":\"${input.Notes}\",\"Name\":\"${input.Name}\",\"Custom1\":\"${input.Custom1}\" },\"callable\": \"${input.callable}\"}"
+    },
+    "response": {
+      "translationMap": {
+        "id": "$.id"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\n   \"id\": ${id}\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "ContactInsertRequest",
+        "type": "object",
+        "required": [
+          "ContactListID",
+          "contactId",
+          "Custom1"
+        ],
+        "properties": {
+          "Phone": {
+            "type": "string"
+          },
+          "Wrap": {
+            "type": "string"
+          },
+          "ContactListID": {
+            "type": "string"
+          },
+          "contactId": {
+            "type": "string"
+          },
+          "Notes": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Custom1": {
+            "type": "string"
+          },
+          "callable": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "ContactInsertResponse",
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

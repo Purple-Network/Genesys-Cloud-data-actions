@@ -1,0 +1,49 @@
+{
+  "name": "Associate External Contact",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/externalcontacts/conversations/${input.conversationId}",
+      "requestType": "PUT",
+      "headers": {},
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {},
+      "translationMapDefaults": {},
+      "successTemplate": "${rawResult}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "externalContactId": {
+            "type": "string"
+          },
+          "conversationId": {
+            "type": "string"
+          },
+          "communicationId": {
+            "type": "string"
+          },
+          "mediaType": {
+            "description": "Valid values: CALL, CALLBACK, CHAT, COBROWSE, EMAIL, MESSAGE, SOCIAL_EXPRESSION, VIDEO, SCREENSHARE",
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

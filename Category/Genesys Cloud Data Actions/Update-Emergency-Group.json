@@ -1,0 +1,195 @@
+{
+  "name": "Update Emergency Group",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/architect/emergencygroups/$esc.url(${input.emergencyGroup_ID})",
+      "requestType": "PUT",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "{\n   \"name\": \"${input.emergencyGroup_Name}\",\n   \"enabled\": ${input.enabled},\n   \"emergencyCallFlows\": [\n  {\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId1}\"\n      },\n      \"ivrs\": [\n        $!{input.ivrIds1}\n      ]\n    },\n    {\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId2}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds2}\n      ]\n    },\n {\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId3}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds3}\n      ]\n    },\n {\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId4}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds4}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId5}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds5}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId6}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds6}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId7}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds7}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId8}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds8}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId9}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds9}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId10}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds10}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId11}\"\n      },\n      \"ivrs\": [\n        $!{input.ivrIds11}\n      ]\n    },\n    {\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId12}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds12}\n      ]\n    },\n {\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId13}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds13}\n      ]\n    },\n {\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId14}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds14}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId15}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds15}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId16}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds16}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId17}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds17}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId18}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds18}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId19}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds19}\n      ]\n    },\n{\n      \"emergencyFlow\": {\n        \"id\": \"$!{input.emergencyFlowId20}\"\n      },\n      \"ivrs\": [\n       $!{input.ivrIds20}\n      ]\n    }\n  ]\n}"
+    },
+    "response": {
+      "translationMap": {
+        "filter1": "$.id",
+        "filter2": "$.name",
+        "filter3": "$.enabled",
+        "filter4": "$.emergencyCallFlows[*].emergencyFlow.name",
+        "filter5": "$.emergencyCallFlows[*].emergencyFlow.id",
+        "filter6": "$.emergencyCallFlows[*].ivrs[*].name",
+        "filter7": "$.emergencyCallFlows[*].ivrs[*].id"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\r\n\"id\":${filter1},\r\n\"name\":${filter2},\r\n\"enabled\":${filter3},\r\n\"emergencyFlow-names\":${filter4},\r\n\"emergencyFlow-ids\":${filter5},\r\n\"ivr-names\":${filter6},\r\n\"ivr-ids\":${filter7}\r\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "PUT EmergencyGroup info",
+        "description": "PUT Emergency Group Status",
+        "type": "object",
+        "properties": {
+          "emergencyGroup_ID": {
+            "type": "string"
+          },
+          "emergencyGroup_Name": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "emergencyFlowId1": {
+            "type": "string"
+          },
+          "emergencyFlowId2": {
+            "type": "string"
+          },
+          "emergencyFlowId3": {
+            "type": "string"
+          },
+          "emergencyFlowId4": {
+            "type": "string"
+          },
+          "emergencyFlowId5": {
+            "type": "string"
+          },
+          "emergencyFlowId6": {
+            "type": "string"
+          },
+          "emergencyFlowId7": {
+            "type": "string"
+          },
+          "emergencyFlowId8": {
+            "type": "string"
+          },
+          "emergencyFlowId9": {
+            "type": "string"
+          },
+          "emergencyFlowId10": {
+            "type": "string"
+          },
+          "emergencyFlowId11": {
+            "type": "string"
+          },
+          "emergencyFlowId12": {
+            "type": "string"
+          },
+          "emergencyFlowId13": {
+            "type": "string"
+          },
+          "emergencyFlowId14": {
+            "type": "string"
+          },
+          "emergencyFlowId15": {
+            "type": "string"
+          },
+          "emergencyFlowId16": {
+            "type": "string"
+          },
+          "emergencyFlowId17": {
+            "type": "string"
+          },
+          "emergencyFlowId18": {
+            "type": "string"
+          },
+          "emergencyFlowId19": {
+            "type": "string"
+          },
+          "emergencyFlowId20": {
+            "type": "string"
+          },
+          "ivrIds1": {
+            "type": "string"
+          },
+          "ivrIds2": {
+            "type": "string"
+          },
+          "ivrIds3": {
+            "type": "string"
+          },
+          "ivrIds4": {
+            "type": "string"
+          },
+          "ivrIds5": {
+            "type": "string"
+          },
+          "ivrIds6": {
+            "type": "string"
+          },
+          "ivrIds7": {
+            "type": "string"
+          },
+          "ivrIds8": {
+            "type": "string"
+          },
+          "ivrIds9": {
+            "type": "string"
+          },
+          "ivrIds10": {
+            "type": "string"
+          },
+          "ivrIds11": {
+            "type": "string"
+          },
+          "ivrIds12": {
+            "type": "string"
+          },
+          "ivrIds13": {
+            "type": "string"
+          },
+          "ivrIds14": {
+            "type": "string"
+          },
+          "ivrIds15": {
+            "type": "string"
+          },
+          "ivrIds16": {
+            "type": "string"
+          },
+          "ivrIds17": {
+            "type": "string"
+          },
+          "ivrIds18": {
+            "type": "string"
+          },
+          "ivrIds19": {
+            "type": "string"
+          },
+          "ivrIds20": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Response",
+        "description": "GET EmergencyGroup",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Emergency Group ID",
+            "type": "string"
+          },
+          "name": {
+            "description": "Emergency Name",
+            "type": "string"
+          },
+          "enabled": {
+            "description": "Status",
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

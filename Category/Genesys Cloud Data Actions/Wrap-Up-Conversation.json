@@ -1,0 +1,48 @@
+{
+  "name": "Wrap Up Conversation",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/conversations/${input.conversationId}/participants/${input.participantId}",
+      "requestType": "PATCH",
+      "headers": {},
+      "requestTemplate": "{\n   \"wrapup\": {\n      \"code\": \"$!{input.wrapUpCodeId}\",\n      \"notes\": \"$!{input.notes}\",\n      \"durationSeconds\": 0\n   },\n   \"state\": \"disconnected\"\n}"
+    },
+    "response": {
+      "translationMap": {},
+      "translationMapDefaults": {},
+      "successTemplate": "${rawResult}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "conversationId": {
+            "type": "string"
+          },
+          "participantId": {
+            "type": "string"
+          },
+          "wrapUpCodeId": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

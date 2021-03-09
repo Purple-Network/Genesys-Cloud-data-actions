@@ -1,0 +1,65 @@
+{
+  "name": "Get Estimated Wait Time by Conversation ID",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/routing/queues/${input.QUEUE_ID}/estimatedwaittime?conversationId=${input.Conversation_ID}",
+      "requestType": "GET",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "estimated_wait_time": "$.results[0].estimatedWaitTimeSeconds"
+      },
+      "translationMapDefaults": {
+        "estimated_wait_time": "0"
+      },
+      "successTemplate": "{\n   \"estimated_wait_time\": ${estimated_wait_time}\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Estimated Wait Time Request",
+        "description": "The estimated wait time for a specific media type and queue.",
+        "type": "object",
+        "required": [
+          "QUEUE_ID"
+        ],
+        "properties": {
+          "QUEUE_ID": {
+            "description": "The queue ID.",
+            "type": "string"
+          },
+          "Conversation_ID": {
+            "description": "Conversation id of the Interaction in queue.",
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get Estimated Wait Time Response",
+        "description": "Returns the estimated wait time.",
+        "type": "object",
+        "properties": {
+          "estimated_wait_time": {
+            "description": "The estimated wait time (in seconds) for the specified media type and queue. ",
+            "type": "integer"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

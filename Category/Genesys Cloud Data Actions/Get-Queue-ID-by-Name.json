@@ -1,0 +1,57 @@
+{
+  "name": "Get Queue ID by Name",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/routing/queues?name=${input.Queue_Name}",
+      "requestType": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "Filter1": "$.entities[*].id"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\r\n   \"QueueID\": ${Filter1}\r\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get Queue",
+        "description": "Get Queue",
+        "type": "object",
+        "required": [
+          "Queue_Name"
+        ],
+        "properties": {
+          "Queue_Name": {
+            "description": "Queue_Name",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Response",
+        "description": "Response",
+        "type": "object",
+        "properties": {
+          "QueueID": {
+            "description": "QueueID",
+            "type": "array",
+            "title": "QueueID"
+          }
+        }
+      }
+    }
+  },
+  "secure": false
+}

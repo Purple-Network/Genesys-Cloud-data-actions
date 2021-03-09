@@ -1,0 +1,95 @@
+{
+  "name": "Update External Contact",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "custom",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/externalcontacts/contacts/${input.contactId}",
+      "requestType": "PUT",
+      "headers": {},
+      "requestTemplate": "{\n   \"firstName\": \"${input.contactFirstName}\",\n   \"lastName\": \"${input.contactLastName}\",\n\n   \"title\": \"${input.contactTitle}\",\n   \"workPhone\": {\n      \"display\": \"${input.contactWorkPhone}\",\n    \n      \"e164\": \"${input.contactWorkPhone}\"\n     \n   },\n   \"cellPhone\": {\n      \"display\": \"${input.contactCellPhone}\",\n    \n      \"e164\": \"${input.contactCellPhone}\"\n   },\n   \"homePhone\": {\n      \"display\": \"${input.contactHomePhone}\",\n\n      \"e164\": \"${input.contactHomePhone}\"\n   },\n   \n   \"workEmail\": \"${input.contactWorkEmail}\",\n   \"personalEmail\": \"${input.contactPersonalEmail}\",\n   \n   \"address\": {\n      \"address1\": \"${input.contactAddress1}\",\n      \"city\": \"${input.contactCity}\",\n      \"state\": \"${input.contactState}\",\n      \"postalCode\": \"${input.contactPostalCode}\",\n      \"countryCode\": \"${input.contactCountryCode}\"\n   },\n\n\n \"surveyOptOut\": ${input.surveyOptOut}\n}"
+    },
+    "response": {
+      "translationMap": {},
+      "translationMapDefaults": {},
+      "successTemplate": "${rawResult}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "contactId",
+          "contactFirstName"
+        ],
+        "properties": {
+          "contactId": {
+            "type": "string"
+          },
+          "surveyOptOut": {
+            "type": "boolean"
+          },
+          "contactFirstName": {
+            "type": "string"
+          },
+          "contactLastName": {
+            "type": "string"
+          },
+          "contactTitle": {
+            "type": "string"
+          },
+          "contactOrgName": {
+            "type": "string"
+          },
+          "contactOrgType": {
+            "type": "string"
+          },
+          "contactWorkPhone": {
+            "type": "string"
+          },
+          "contactCellPhone": {
+            "type": "string"
+          },
+          "contactHomePhone": {
+            "type": "string"
+          },
+          "contactWorkEmail": {
+            "type": "string"
+          },
+          "contactPersonalEmail": {
+            "default": " ",
+            "type": "string"
+          },
+          "contactOtherEmail": {
+            "type": "string"
+          },
+          "contactAddress1": {
+            "type": "string"
+          },
+          "contactCity": {
+            "type": "string"
+          },
+          "contactState": {
+            "type": "string"
+          },
+          "contactPostalCode": {
+            "type": "string"
+          },
+          "contactCountryCode": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "output": {
+      "successSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      }
+    }
+  },
+  "secure": false
+}

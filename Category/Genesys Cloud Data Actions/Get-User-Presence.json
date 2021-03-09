@@ -1,0 +1,58 @@
+{
+  "name": "Get User Presence",
+  "integrationType": "purecloud-data-actions",
+  "actionType": "static",
+  "config": {
+    "request": {
+      "requestUrlTemplate": "/api/v2/users/${input.USER_ID}/presences/PURECLOUD",
+      "requestType": "GET",
+      "headers": {
+        "UserAgent": "PureCloudIntegrations/1.0",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "requestTemplate": "${input.rawRequest}"
+    },
+    "response": {
+      "translationMap": {
+        "presence": "$.presenceDefinition.systemPresence"
+      },
+      "translationMapDefaults": {},
+      "successTemplate": "{\n   \"presence\": ${presence}\n}"
+    }
+  },
+  "contract": {
+    "input": {
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "UserIdRequest",
+        "description": "A user ID-based request.",
+        "type": "object",
+        "required": [
+          "USER_ID"
+        ],
+        "properties": {
+          "USER_ID": {
+            "type": "string",
+            "description": "The user ID."
+          }
+        }
+      }
+    },
+    "output": {
+      "successSchema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Get User Presence Response",
+        "description": "Returns a user’s presence.",
+        "type": "object",
+        "properties": {
+          "presence": {
+            "type": "string",
+            "title": "Presence",
+            "description": "The user’s presence, which indicates whether the user can be reached."
+          }
+        }
+      }
+    }
+  },
+  "secure": false
+}
